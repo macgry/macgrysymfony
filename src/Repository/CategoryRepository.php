@@ -35,7 +35,9 @@ class CategoryRepository extends ServiceEntityRepository
      */
     public function queryAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('category');
+        return $this->createQueryBuilder('category')
+            ->select('category', 'partial tasks.{id}')
+            ->join('category.tasks', 'tasks');
     }
 
     /**
@@ -46,6 +48,17 @@ class CategoryRepository extends ServiceEntityRepository
     public function save(Category $category): void
     {
         $this->getEntityManager()->persist($category);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Delete entity.
+     *
+     * @param Category $category Category entity
+     */
+    public function delete(Category $category): void
+    {
+        $this->getEntityManager()->remove($category);
         $this->getEntityManager()->flush();
     }
 }

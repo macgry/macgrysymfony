@@ -4,38 +4,23 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\TaskRepository;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
-/**
- * Class CategoryService.
- */
 class CategoryService implements CategoryServiceInterface
 {
-    /**
-     * Items per page.
-     */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-    /**
-     * Constructor.
-     *
-     * @param CategoryRepository $categoryRepository Category repository
-     * @param PaginatorInterface $paginator          Paginator
-     */
     public function __construct(
         private readonly CategoryRepository $categoryRepository,
+        private readonly TaskRepository $taskRepository, // <-- dodane
         private readonly PaginatorInterface $paginator
     ) {
     }
 
-    /**
-     * Get paginated list of categories.
-     *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface Paginated list
-     */
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -50,18 +35,27 @@ class CategoryService implements CategoryServiceInterface
         );
     }
 
-    /**
-     * Save a category entity.
-     *
-     * @param Category $category Category entity
-     */
     public function save(Category $category): void
     {
-        $category->setUpdatedAt(new \DateTimeImmutable());
-        if (null === $category->getId()) {
-            $category->setCreatedAt(new \DateTimeImmutable());
-        }
-
+        // Gedmo Timestampable ustawia createdAt i updatedAt automatycznie
         $this->categoryRepository->save($category);
+    }
+
+    /**
+     * Can Category be deleted?
+     *
+     * @param Category $category Category entity
+     *
+     * @return bool
+     */
+    public function canBeDeleted(Category $category): bool
+    {
+        try {
+            $result = $this->taskRepository->countByCategory($category);
+
+            return $result === 0;
+        } catch (NoResultException|NonUniqueResultException) {
+            return false;
+        }
     }
 }
