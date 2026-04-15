@@ -20,53 +20,33 @@ use App\Entity\Task;
 #[ORM\UniqueConstraint(name: 'uq_categories_title', columns: ['title'])]
 class Category
 {
-    /**
-     * Primary key.
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * Title.
-     */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
     #[Assert\NotBlank]
     #[Assert\Length(min: 3, max: 64)]
     private ?string $title = null;
 
-    /**
-     * Created at.
-     */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt = null;
 
-    /**
-     * Updated at.
-     */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\Type(\DateTimeImmutable::class)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    /**
-     * Slug.
-     */
     #[ORM\Column(type: 'string', length: 64)]
     #[Assert\Type('string')]
     #[Assert\Length(min: 3, max: 64)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug = null;
 
-    /**
-     * Tasks.
-     *
-     * OneToMany relation to Task.
-     */
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Task::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $tasks;
 
@@ -99,9 +79,21 @@ class Category
         return $this->createdAt;
     }
 
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
     }
 
     public function getSlug(): ?string
@@ -135,7 +127,6 @@ class Category
     public function removeTask(Task $task): static
     {
         if ($this->tasks->removeElement($task)) {
-            // set the owning side to null (unless already changed)
             if ($task->getCategory() === $this) {
                 $task->setCategory(null);
             }
