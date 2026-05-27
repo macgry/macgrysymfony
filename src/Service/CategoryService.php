@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
-use App\Repository\TaskRepository;
+use App\Repository\PostRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -16,7 +16,7 @@ class CategoryService implements CategoryServiceInterface
 
     public function __construct(
         private readonly CategoryRepository $categoryRepository,
-        private readonly TaskRepository $taskRepository, // <-- dodane
+        private readonly PostRepository $postRepository,
         private readonly PaginatorInterface $paginator
     ) {
     }
@@ -37,21 +37,16 @@ class CategoryService implements CategoryServiceInterface
 
     public function save(Category $category): void
     {
-        // Gedmo Timestampable ustawia createdAt i updatedAt automatycznie
         $this->categoryRepository->save($category);
     }
 
     /**
      * Can Category be deleted?
-     *
-     * @param Category $category Category entity
-     *
-     * @return bool
      */
     public function canBeDeleted(Category $category): bool
     {
         try {
-            $result = $this->taskRepository->countByCategory($category);
+            $result = $this->postRepository->countByCategory($category);
 
             return $result === 0;
         } catch (NoResultException|NonUniqueResultException) {

@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Task fixtures.
+ * Post fixtures.
  */
 
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use App\Entity\Task;
+use App\Entity\Post;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
 /**
- * Class TaskFixtures.
+ * Class PostFixtures.
  *
  * @psalm-suppress MissingConstructor
  */
-class TaskFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
+class PostFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
      * Load data.
@@ -32,23 +32,26 @@ class TaskFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             return;
         }
 
-        $this->createMany(100, 'task', function (int $i) {
-            $task = new Task();
-            $task->setTitle($this->faker->sentence);
-            $task->setCreatedAt(
-                \DateTimeImmutable::createFromMutable(
-                    $this->faker->dateTimeBetween('-100 days', '-1 days')
-                )
-            );
-            $task->setUpdatedAt(
-                \DateTimeImmutable::createFromMutable(
-                    $this->faker->dateTimeBetween('-100 days', '-1 days')
-                )
-            );
-            $category = $this->getRandomReference('category', Category::class);
-            $task->setCategory($category);
+        $this->createMany(100, 'post', function (int $i) {
+            $post = new Post();
+            $post->setTitle($this->faker->sentence);
 
-            return $task;
+            $post->setCreatedAt(
+                \DateTimeImmutable::createFromMutable(
+                    $this->faker->dateTimeBetween('-100 days', '-1 days')
+                )
+            );
+
+            $post->setUpdatedAt(
+                \DateTimeImmutable::createFromMutable(
+                    $this->faker->dateTimeBetween('-100 days', '-1 days')
+                )
+            );
+
+            $category = $this->getRandomReference('category', Category::class);
+            $post->setCategory($category);
+
+            return $post;
         });
     }
 

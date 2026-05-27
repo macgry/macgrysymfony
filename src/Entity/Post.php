@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Task entity.
+ * Post entity.
  */
 
 namespace App\Entity;
 
-use App\Repository\TaskRepository;
+use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Task.
+ * Class Post.
  */
-#[ORM\Entity(repositoryClass: TaskRepository::class)]
-#[ORM\Table(name: 'tasks')]
-class Task
+#[ORM\Entity(repositoryClass: PostRepository::class)]
+#[ORM\Table(name: 'posts')]
+class Post
 {
     /**
      * Primary key.
@@ -49,71 +49,36 @@ class Task
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    /**
-     * Getter for Id.
-     *
-     * @return int|null Id
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Getter for title.
-     *
-     * @return string|null Title
-     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Setter for title.
-     *
-     * @param string|null $title Title
-     */
     public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * Getter for created at.
-     *
-     * @return \DateTimeImmutable|null Created at
-     */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    /**
-     * Setter for created at.
-     *
-     * @param \DateTimeImmutable|null $createdAt Created at
-     */
     public function setCreatedAt(?\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * Getter for updated at.
-     *
-     * @return \DateTimeImmutable|null Updated at
-     */
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    /**
-     * Setter for updated at.
-     *
-     * @param \DateTimeImmutable|null $updatedAt Updated at
-     */
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;

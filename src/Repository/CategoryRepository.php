@@ -18,11 +18,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
-    /**
-     * Constructor.
-     *
-     * @param ManagerRegistry $registry Manager registry
-     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
@@ -36,14 +31,12 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('category')
-            ->select('category', 'partial tasks.{id}')
-            ->join('category.tasks', 'tasks');
+            ->select('category', 'partial posts.{id}')
+            ->join('category.posts', 'posts');
     }
 
     /**
      * Save entity.
-     *
-     * @param Category $category Category entity
      */
     public function save(Category $category): void
     {
@@ -53,8 +46,6 @@ class CategoryRepository extends ServiceEntityRepository
 
     /**
      * Delete entity.
-     *
-     * @param Category $category Category entity
      */
     public function delete(Category $category): void
     {

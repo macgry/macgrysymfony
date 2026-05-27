@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Task;
+use App\Entity\Post;
 
 /**
  * Class Category.
@@ -47,17 +47,18 @@ class Category
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Task::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
-    private Collection $tasks;
+    #[ORM\OneToMany(
+        mappedBy: 'category',
+        targetEntity: Post::class,
+        orphanRemoval: true,
+        cascade: ['persist', 'remove']
+    )]
+    private Collection $posts;
 
     public function __construct()
     {
-        $this->tasks = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
-
-    // --------------------------
-    // Getters and setters
-    // --------------------------
 
     public function getId(): ?int
     {
@@ -108,29 +109,31 @@ class Category
     }
 
     /**
-     * @return Collection<int, Task>
+     * @return Collection<int, Post>
      */
-    public function getTasks(): Collection
+    public function getPosts(): Collection
     {
-        return $this->tasks;
+        return $this->posts;
     }
 
-    public function addTask(Task $task): static
+    public function addPost(Post $post): static
     {
-        if (!$this->tasks->contains($task)) {
-            $this->tasks->add($task);
-            $task->setCategory($this);
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->setCategory($this);
         }
+
         return $this;
     }
 
-    public function removeTask(Task $task): static
+    public function removePost(Post $post): static
     {
-        if ($this->tasks->removeElement($task)) {
-            if ($task->getCategory() === $this) {
-                $task->setCategory(null);
+        if ($this->posts->removeElement($post)) {
+            if ($post->getCategory() === $this) {
+                $post->setCategory(null);
             }
         }
+
         return $this;
     }
 }

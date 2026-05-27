@@ -20,6 +20,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'post.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'post.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title') }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -28,9 +29,10 @@
             {% for post in pagination.items %}
                 <tr>
                     <td>{{ post.id }}</td>
-                    <td>{{ post.createdAt|date('Y/m/d') }}</td>
-                    <td>{{ post.updatedAt|date('Y/m/d') }}</td>
+                    <td>{{ post.createdAt|format_date('long') }}</td>
+                    <td>{{ post.updatedAt|format_date('long') }}</td>
                     <td>{{ post.title }}</td>
+                    <td>{{ post.category.title }}</td>
                     <td>
                         <a href="{{ url('post_view', {id: post.id}) }}"
                            title="{{ 'action.view'|trans }}">
@@ -48,7 +50,10 @@
 
     {% else %}
         <p>
-            {{ 'message.empty_list'|trans }}
+            {% include 'default/_single_alert_message.html.twig' with {
+                type: 'warning',
+                message: 'message.empty_list'|trans
+            } %}
         </p>
     {% endif %}
 {% endblock %}

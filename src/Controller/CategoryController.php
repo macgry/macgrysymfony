@@ -10,6 +10,7 @@ use App\Entity\Category;
 use App\Form\Type\CategoryType;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -26,10 +27,12 @@ class CategoryController extends AbstractController
      * Constructor.
      *
      * @param CategoryServiceInterface $categoryService Category service
-     * @param TranslatorInterface $translator Translator
+     * @param TranslatorInterface      $translator      Translator
      */
-    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly CategoryServiceInterface $categoryService,
+        private readonly TranslatorInterface $translator
+    ) {
     }
 
     /**
@@ -47,7 +50,9 @@ class CategoryController extends AbstractController
     {
         $pagination = $this->categoryService->getPaginatedList($page);
 
-        return $this->render('category/index.html.twig', ['pagination' => $pagination]);
+        return $this->render('category/index.html.twig', [
+            'pagination' => $pagination,
+        ]);
     }
 
     /**
@@ -86,7 +91,9 @@ class CategoryController extends AbstractController
     public function create(Request $request): Response
     {
         $category = new Category();
+
         $form = $this->createForm(CategoryType::class, $category);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -127,9 +134,12 @@ class CategoryController extends AbstractController
             $category,
             [
                 'method' => 'PUT',
-                'action' => $this->generateUrl('category_edit', ['id' => $category->getId()]),
+                'action' => $this->generateUrl('category_edit', [
+                    'id' => $category->getId(),
+                ]),
             ]
         );
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -171,7 +181,7 @@ class CategoryController extends AbstractController
         if (!$this->categoryService->canBeDeleted($category)) {
             $this->addFlash(
                 'warning',
-                $this->translator->trans('message.category_contains_tasks')
+                $this->translator->trans('message.category_contains_posts')
             );
 
             return $this->redirectToRoute('category_index');
@@ -179,8 +189,11 @@ class CategoryController extends AbstractController
 
         $form = $this->createForm(FormType::class, $category, [
             'method' => 'DELETE',
-            'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
+            'action' => $this->generateUrl('category_delete', [
+                'id' => $category->getId(),
+            ]),
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
