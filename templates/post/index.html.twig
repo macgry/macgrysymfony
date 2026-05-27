@@ -9,6 +9,12 @@
 
     {% if pagination is defined and pagination.items|length %}
 
+        <div class="mb-3">
+            <a class="btn btn-success" href="{{ url('post_create') }}">
+                {{ 'action.create'|trans }}
+            </a>
+        </div>
+
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
@@ -16,11 +22,9 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'post.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'post.createdAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'post.updatedAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'post.title') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'ID', 'post.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Title', 'post.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Category', 'category.title') }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -29,14 +33,19 @@
             {% for post in pagination.items %}
                 <tr>
                     <td>{{ post.id }}</td>
-                    <td>{{ post.createdAt|format_date('long') }}</td>
-                    <td>{{ post.updatedAt|format_date('long') }}</td>
                     <td>{{ post.title }}</td>
                     <td>{{ post.category.title }}</td>
                     <td>
-                        <a href="{{ url('post_view', {id: post.id}) }}"
-                           title="{{ 'action.view'|trans }}">
+                        <a href="{{ url('post_view', {id: post.id}) }}" class="btn btn-sm btn-primary">
                             {{ 'action.view'|trans }}
+                        </a>
+
+                        <a href="{{ url('post_edit', {id: post.id}) }}" class="btn btn-sm btn-warning">
+                            {{ 'action.edit'|trans }}
+                        </a>
+
+                        <a href="{{ url('post_delete', {id: post.id}) }}" class="btn btn-sm btn-danger">
+                            {{ 'action.delete'|trans }}
                         </a>
                     </td>
                 </tr>
@@ -49,11 +58,6 @@
         </div>
 
     {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.empty_list'|trans
-            } %}
-        </p>
+        <p>{{ 'message.empty_list'|trans }}</p>
     {% endif %}
 {% endblock %}

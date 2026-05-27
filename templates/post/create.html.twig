@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'action.create'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'action.create'|trans }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button class="btn btn-success">
+        {{ 'action.save'|trans }}
+    </button>
+    {{ form_end(form) }}
+
+    <a href="{{ url('post_index') }}" class="btn btn-secondary">
+        {{ 'action.back_to_list'|trans }}
+    </a>
+{% endblock %}
