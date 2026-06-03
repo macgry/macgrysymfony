@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Category controller.
- */
-
 namespace App\Controller;
 
 use App\Entity\Category;
@@ -17,35 +13,15 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class CategoryController.
- */
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    /**
-     * Constructor.
-     *
-     * @param CategoryServiceInterface $categoryService Category service
-     * @param TranslatorInterface      $translator      Translator
-     */
     public function __construct(
         private readonly CategoryServiceInterface $categoryService,
         private readonly TranslatorInterface $translator
-    ) {
-    }
+    ) {}
 
-    /**
-     * Index action.
-     *
-     * @param int $page Page number
-     *
-     * @return Response HTTP response
-     */
-    #[Route(
-        name: 'category_index',
-        methods: ['GET']
-    )]
+    #[Route(name: 'category_index', methods: ['GET'])]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->categoryService->getPaginatedList($page);
@@ -55,44 +31,22 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    /**
-     * View action.
-     *
-     * @param Category $category Category entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route(
-        '/{id}',
-        name: 'category_view',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET']
-    )]
+    #[Route('/{id}', name: 'category_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
     public function view(Category $category): Response
     {
-        return $this->render(
-            'category/view.html.twig',
-            ['category' => $category]
-        );
+        return $this->render('category/view.html.twig', [
+            'category' => $category,
+        ]);
     }
 
-    /**
-     * Create action.
-     *
-     * @param Request $request HTTP request
-     *
-     * @return Response HTTP response
-     */
-    #[Route(
-        '/create',
-        name: 'category_create',
-        methods: ['GET', 'POST']
-    )]
+    #[Route('/create', name: 'category_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $category = new Category();
 
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(CategoryType::class, $category, [
+            'method' => 'POST',
+        ]);
 
         $form->handleRequest($request);
 
@@ -107,38 +61,20 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('category_index');
         }
 
-        return $this->render(
-            'category/create.html.twig',
-            ['form' => $form->createView()]
-        );
+        return $this->render('category/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
-    /**
-     * Edit action.
-     *
-     * @param Request  $request  HTTP request
-     * @param Category $category Category entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route(
-        '/{id}/edit',
-        name: 'category_edit',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET', 'PUT']
-    )]
+    #[Route('/{id}/edit', name: 'category_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category): Response
     {
-        $form = $this->createForm(
-            CategoryType::class,
-            $category,
-            [
-                'method' => 'PUT',
-                'action' => $this->generateUrl('category_edit', [
-                    'id' => $category->getId(),
-                ]),
-            ]
-        );
+        $form = $this->createForm(CategoryType::class, $category, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('category_edit', [
+                'id' => $category->getId(),
+            ]),
+        ]);
 
         $form->handleRequest($request);
 
@@ -153,29 +89,13 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('category_index');
         }
 
-        return $this->render(
-            'category/edit.html.twig',
-            [
-                'form' => $form->createView(),
-                'category' => $category,
-            ]
-        );
+        return $this->render('category/edit.html.twig', [
+            'form' => $form->createView(),
+            'category' => $category,
+        ]);
     }
 
-    /**
-     * Delete action.
-     *
-     * @param Request  $request  HTTP request
-     * @param Category $category Category entity
-     *
-     * @return Response HTTP response
-     */
-    #[Route(
-        '/{id}/delete',
-        name: 'category_delete',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET', 'DELETE']
-    )]
+    #[Route('/{id}/delete', name: 'category_delete', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
     public function delete(Request $request, Category $category): Response
     {
         if (!$this->categoryService->canBeDeleted($category)) {
@@ -188,7 +108,7 @@ class CategoryController extends AbstractController
         }
 
         $form = $this->createForm(FormType::class, $category, [
-            'method' => 'DELETE',
+            'method' => 'POST',
             'action' => $this->generateUrl('category_delete', [
                 'id' => $category->getId(),
             ]),
@@ -207,12 +127,9 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('category_index');
         }
 
-        return $this->render(
-            'category/delete.html.twig',
-            [
-                'form' => $form->createView(),
-                'category' => $category,
-            ]
-        );
+        return $this->render('category/delete.html.twig', [
+            'form' => $form->createView(),
+            'category' => $category,
+        ]);
     }
 }

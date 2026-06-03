@@ -1,16 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.category_delete'|trans({'%id%': category.id|default('')}) }}
+    {{ 'action.delete'|trans }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title.category_delete'|trans({'%id%': category.id|default('')}) }}</h1>
+    <h1>{{ 'action.delete'|trans }}</h1>
 
-    {% include 'default/_form.html.twig' with {
-        page_title: 'title.category_delete'|trans({'%id%': category.id|default('')}),
-        form: form,
-        submit_label: 'action.delete'|trans,
-        back_to_list_path: 'category_index',
-    } %}
+    <p>
+        Czy na pewno chcesz usunąć kategorię:
+        <strong>{{ category.title }}</strong>?
+    </p>
+
+    {{ form_start(form) }}
+
+    <button type="submit" class="btn btn-danger">
+        {{ 'action.delete'|trans }}
+    </button>
+
+    {{ form_end(form) }}
+
+    <a href="{{ url('category_index') }}" class="btn btn-secondary">
+        {{ 'action.back_to_list'|trans }}
+    </a>
 {% endblock %}

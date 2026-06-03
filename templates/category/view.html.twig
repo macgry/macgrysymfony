@@ -1,0 +1,13 @@
+<h1>{{ category.title }}</h1>
+
+<h3>Posts in this category:</h3>
+
+<ul>
+    {% for post in category.posts %}
+    <li>
+        <a href="{{ url('post_view', {id: post.id}) }}">
+            {{ post.title }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>

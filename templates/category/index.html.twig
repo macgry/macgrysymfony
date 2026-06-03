@@ -16,28 +16,23 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'category.title') }}</th>
-                <th>{{ 'label.actions'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'ID', 'category.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Title', 'category.title') }}</th>
+                <th>Actions</th>
             </tr>
             </thead>
+
             <tbody>
             {% for category in pagination.items %}
                 <tr>
                     <td>{{ category.id }}</td>
                     <td>{{ category.title }}</td>
                     <td>
-                        <a href="{{ url('category_view', {id: category.id}) }}" title="{{ 'action.view'|trans }}">
-                            {{ 'action.view'|trans }}
-                        </a>
+                        <a href="{{ url('category_view', {id: category.id}) }}">view</a>
                         |
-                        <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
-                            {{ 'action.edit'|trans }}
-                        </a>
+                        <a href="{{ url('category_edit', {id: category.id}) }}">edit</a>
                         |
-                        <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
-                            {{ 'action.delete'|trans }}
-                        </a>
+                        <a href="{{ url('category_delete', {id: category.id}) }}">delete</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -49,17 +44,13 @@
         </div>
 
     {% else %}
-        <p>
-            {% include 'default/_single_alert_message.html.twig' with {
-                type: 'warning',
-                message: 'message.empty_list'|trans
-            } %}
-        </p>
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
     {% endif %}
 
-    <p>
-        <a href="{{ url('category_create') }}" class="btn btn-primary">
-            {{ 'action.create'|trans }}
-        </a>
-    </p>
+    <a class="btn btn-primary" href="{{ url('category_create') }}">
+        {{ 'action.create'|trans }}
+    </a>
 {% endblock %}
