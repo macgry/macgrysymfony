@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.profile_edit'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        <h1>{{ 'title.profile'|trans }}</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button class="btn btn-primary mt-3">
+            {{ 'action.save'|trans }}
+        </button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('admin_profile_password') }}" class="btn btn-link mt-3">
+            {{ 'menu.change_password'|trans }}
+        </a>
+
+    </div>
+{% endblock %}

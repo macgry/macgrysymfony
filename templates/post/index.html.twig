@@ -22,9 +22,9 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'ID', 'post.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Title', 'post.title') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Category', 'category.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'post.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'post.title'|trans, 'post.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'category.title'|trans, 'category.title') }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -44,9 +44,14 @@
                             {{ 'action.edit'|trans }}
                         </a>
 
-                        <a href="{{ url('post_delete', {id: post.id}) }}" class="btn btn-sm btn-danger">
-                            {{ 'action.delete'|trans }}
-                        </a>
+                        <form method="post"
+                              action="{{ path('post_delete', {id: post.id}) }}"
+                              style="display: inline-block"
+                              onsubmit="return confirm('{{ 'message.delete_confirm'|trans }}');">
+                            <button class="btn btn-sm btn-danger">
+                                {{ 'action.delete'|trans }}
+                            </button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Category service.
+ */
+
 namespace App\Service;
 
 use App\Entity\Category;
@@ -10,17 +14,31 @@ use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * Class CategoryService.
+ */
 class CategoryService implements CategoryServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-    public function __construct(
-        private readonly CategoryRepository $categoryRepository,
-        private readonly PostRepository $postRepository,
-        private readonly PaginatorInterface $paginator
-    ) {
+    /**
+     * Constructor.
+     *
+     * @param CategoryRepository $categoryRepository Category repository
+     * @param PostRepository     $postRepository     Post repository
+     * @param PaginatorInterface $paginator          Paginator
+     */
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly PostRepository $postRepository, private readonly PaginatorInterface $paginator)
+    {
     }
 
+    /**
+     * Get paginated list.
+     *
+     * @param int $page Page number
+     *
+     * @return PaginationInterface Paginated list
+     */
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -35,25 +53,39 @@ class CategoryService implements CategoryServiceInterface
         );
     }
 
+    /**
+     * Save category.
+     *
+     * @param Category $category Category entity
+     */
     public function save(Category $category): void
     {
         $this->categoryRepository->save($category);
     }
 
+    /**
+     * Delete category.
+     *
+     * @param Category $category Category entity
+     */
     public function delete(Category $category): void
     {
         $this->categoryRepository->delete($category);
     }
 
     /**
-     * Can Category be deleted?
+     * Can category be deleted?
+     *
+     * @param Category $category Category entity
+     *
+     * @return bool Result
      */
     public function canBeDeleted(Category $category): bool
     {
         try {
             $result = $this->postRepository->countByCategory($category);
 
-            return $result === 0;
+            return 0 === $result;
         } catch (NoResultException|NonUniqueResultException) {
             return false;
         }

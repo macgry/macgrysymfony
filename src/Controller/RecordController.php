@@ -1,30 +1,47 @@
 <?php
+
+/**
+ * Record controller.
+ */
+
 namespace App\Controller;
 
+use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\RecordRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class RecordController.
+ */
 #[Route('/record')]
 class RecordController extends AbstractController
 {
-    // ---------------------------------------------------
-    // Index action - lista wszystkich rekordów
-    // ---------------------------------------------------
+    /**
+     * Index action.
+     *
+     * @param RecordRepository $repository Record repository
+     *
+     * @return Response HTTP response
+     */
     #[Route(name: 'record_index', methods: ['GET'])]
     public function index(RecordRepository $repository): Response
     {
         $records = $repository->findAll();
 
         return $this->render('record/index.html.twig', [
-            'records' => $records
+            'records' => $records,
         ]);
     }
 
-    // ---------------------------------------------------
-    // View action - szczegóły pojedynczego rekordu
-    // ---------------------------------------------------
+    /**
+     * View action.
+     *
+     * @param RecordRepository $repository Record repository
+     * @param int              $id         Record identifier
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/{id}',
         name: 'record_view',
@@ -40,24 +57,25 @@ class RecordController extends AbstractController
         }
 
         return $this->render('record/view.html.twig', [
-            'record' => $record
+            'record' => $record,
         ]);
     }
 
-    // ---------------------------------------------------
-    // Bookmarks action - przykład użycia bookmarks.inc.php
-    // ---------------------------------------------------
+    /**
+     * Bookmarks action.
+     *
+     * @return Response HTTP response
+     */
     #[Route('/bookmarks', name: 'record_bookmarks', methods: ['GET'])]
     public function bookmarks(): Response
     {
-        // Wczytanie pliku inc/debug.inc.php jeśli potrzebne
-        require_once __DIR__ . '/../../inc/debug.inc.php';
-        require_once __DIR__ . '/../../inc/bookmarks.inc.php';
+        require_once __DIR__.'/../../inc/debug.inc.php';
+        require_once __DIR__.'/../../inc/bookmarks.inc.php';
 
         $allBookmarks = find_all();
 
         return $this->render('record/bookmarks.html.twig', [
-            'bookmarks' => $allBookmarks
+            'bookmarks' => $allBookmarks,
         ]);
     }
 }

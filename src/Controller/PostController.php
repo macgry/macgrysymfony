@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Post controller.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Post;
@@ -12,15 +16,29 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class PostController.
+ */
 #[Route('/post')]
 class PostController extends AbstractController
 {
-    public function __construct(
-        private readonly PostServiceInterface $postService,
-        private readonly TranslatorInterface $translator
-    ) {
+    /**
+     * Constructor.
+     *
+     * @param PostServiceInterface $postService Post service
+     * @param TranslatorInterface  $translator  Translator
+     */
+    public function __construct(private readonly PostServiceInterface $postService, private readonly TranslatorInterface $translator)
+    {
     }
 
+    /**
+     * Index action.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
+     */
     #[Route(name: 'post_index', methods: ['GET'])]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
@@ -29,6 +47,13 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * View action.
+     *
+     * @param Post $post Post entity
+     *
+     * @return Response HTTP response
+     */
     #[Route('/{id<\d+>}', name: 'post_view', methods: ['GET'])]
     public function view(Post $post): Response
     {
@@ -37,12 +62,19 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
     #[Route('/create', name: 'post_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $post = new Post();
-        $form = $this->createForm(PostType::class, $post);
 
+        $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,10 +90,19 @@ class PostController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     * @param Post    $post    Post entity
+     *
+     * @return Response HTTP response
+     */
     #[Route('/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Post $post): Response
     {
         $form = $this->createForm(PostType::class, $post, [
+            'method' => 'POST',
             'action' => $this->generateUrl('post_edit', ['id' => $post->getId()]),
         ]);
 
@@ -72,7 +113,7 @@ class PostController extends AbstractController
 
             $this->addFlash('success', $this->translator->trans('message.edited_successfully'));
 
-            return $this->redirectToRoute('post_index');
+            return $this->redirectToRoute('post_view', ['id' => $post->getId()]);
         }
 
         return $this->render('post/edit.html.twig', [
@@ -81,19 +122,20 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'post_delete', methods: ['GET', 'POST'])]
-    public function delete(Request $request, Post $post): Response
+    /**
+     * Delete action.
+     *
+     * @param Post $post Post entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/delete', name: 'post_delete', methods: ['POST'])]
+    public function delete(Post $post): Response
     {
-        if ($request->isMethod('POST')) {
-            $this->postService->delete($post);
+        $this->postService->delete($post);
 
-            $this->addFlash('success', $this->translator->trans('message.deleted_successfully'));
+        $this->addFlash('success', $this->translator->trans('message.deleted_successfully'));
 
-            return $this->redirectToRoute('post_index');
-        }
-
-        return $this->render('post/delete.html.twig', [
-            'post' => $post,
-        ]);
+        return $this->redirectToRoute('post_index');
     }
 }

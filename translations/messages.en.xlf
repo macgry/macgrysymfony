@@ -10,6 +10,38 @@
         <source>label.id</source>
         <target>Id</target>
       </trans-unit>
+      <trans-unit id="message.category_not_found">
+        <source>message.category_not_found</source>
+        <target>Category not found.</target>
+      </trans-unit>
+      <trans-unit id="title.blog">
+        <source>title.blog</source>
+        <target>Blog</target>
+      </trans-unit>
+      <trans-unit id="title.user_create">
+        <source>title.user_create</source>
+        <target>Create user</target>
+      </trans-unit>
+      <trans-unit id="title.user_delete">
+        <source>title.user_delete</source>
+        <target>Delete user</target>
+      </trans-unit>
+      <trans-unit id="label.role">
+        <source>label.role</source>
+        <target>Role</target>
+      </trans-unit>
+      <trans-unit id="message.no_users_found">
+        <source>message.no_users_found</source>
+        <target>No users found.</target>
+      </trans-unit>
+      <trans-unit id="message.user_not_found">
+        <source>message.user_not_found</source>
+        <target>User not found.</target>
+      </trans-unit>
+      <trans-unit id="label.roles">
+        <source>label.roles</source>
+        <target>Roles</target>
+      </trans-unit>
       <trans-unit id="label.title">
         <source>label.title</source>
         <target>Title</target>
@@ -18,30 +50,290 @@
         <source>label.content</source>
         <target>Content</target>
       </trans-unit>
-      <trans-unit id="label.tags">
-        <source>label.tags</source>
-        <target>Tags</target>
+      <trans-unit id="message.empty_commentlist">
+        <source>message.empty_commentlist</source>
+        <target>There are no comments.</target>
       </trans-unit>
-      <trans-unit id="message.empty_list">
-        <source>message.empty_list</source>
-        <target>List is empty.</target>
+      <trans-unit id="message.post_not_found">
+        <source>message.post_not_found</source>
+        <target>Post not found.</target>
+      </trans-unit>
+      <trans-unit id="message.edited_successfully">
+        <source>message.edited_successfully</source>
+        <target>Edited successfully.</target>
+      </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Created successfully.</target>
+      </trans-unit>
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Deleted successfully.</target>
+      </trans-unit>
+      <trans-unit id="title.post_details">
+        <source>title.post_details</source>
+        <target>Post details #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.post_list">
+        <source>title.post_list</source>
+        <target>Post list</target>
+      </trans-unit>
+      <trans-unit id="label.created_at">
+        <source>label.created_at</source>
+        <target>Created at</target>
+      </trans-unit>
+      <trans-unit id="label.updated_at">
+        <source>label.updated_at</source>
+        <target>Updated at</target>
+      </trans-unit>
+      <trans-unit id="label.category">
+        <source>label.category</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="action.view">
+        <source>action.view</source>
+        <target>View</target>
+      </trans-unit>
+      <trans-unit id="action.edit">
+        <source>action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="action.back_to_list">
+        <source>action.back_to_list</source>
+        <target>Back to list</target>
+      </trans-unit>
+      <trans-unit id="title.post_edit">
+        <source>title.post_edit</source>
+        <target>Edit post</target>
+      </trans-unit>
+      <trans-unit id="title.post_delete">
+        <source>title.post_delete</source>
+        <target>Delete post</target>
+      </trans-unit>
+      <trans-unit id="action.save">
+        <source>action.save</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="action.create">
+        <source>action.create</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="message.form_error">
+        <source>message.form_error</source>
+        <target>Form error</target>
+      </trans-unit>
+      <trans-unit id="title.comment_list">
+        <source>title.comment_list</source>
+        <target>Comments</target>
+      </trans-unit>
+      <trans-unit id="action.comment_create">
+        <source>action.comment_create</source>
+        <target>Add comment</target>
+      </trans-unit>
+      <trans-unit id="action.change_password">
+        <source>action.change_password</source>
+        <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="action.login">
+        <source>action.login</source>
+        <target>Log in</target>
+      </trans-unit>
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>Password</target>
       </trans-unit>
       <trans-unit id="message.record_not_found">
         <source>message.record_not_found</source>
-        <target>Record not found.</target>
+        <target>Record not found!</target>
       </trans-unit>
-      <trans-unit id="title.record_list">
-        <source>title.record_list</source>
-        <target>Records list</target>
+      <trans-unit id="label.author">
+        <source>label.author</source>
+        <target>Author</target>
       </trans-unit>
-      <trans-unit id="title.record_view">
-        <source>title.record_view</source>
-        <target>Record view #%id%</target>
+      <trans-unit id="message.category_contains_posts">
+        <source>message.category_contains_posts</source>
+        <target>Category contains posts</target>
       </trans-unit>
-      <trans-unit id="title.post_details">
-          <source>title.post_details</source>
-          <target>Post details #%id%</target>
+      <trans-unit id="message.updated_successfully">
+        <source>message.updated_successfully</source>
+        <target>Updated Succesfully</target>
       </trans-unit>
+      <trans-unit id="title.welcome">
+        <source>title.welcome</source>
+        <target>Welcome</target>
+      </trans-unit>
+      <trans-unit id="menu.mainpage">
+        <source>menu.mainpage</source>
+        <target>Main Page</target>
+      </trans-unit>
+      <trans-unit id="menu.users">
+        <source>menu.users</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="action.logout">
+        <source>action.logout</source>
+        <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="title.category_create">
+        <source>title.category_create</source>
+        <target>Create Category</target>
+      </trans-unit>
+      <trans-unit id="category.delete">
+        <source>category.delete</source>
+        <target>Delete Category</target>
+      </trans-unit>
+      <trans-unit id="category.edit">
+        <source>category.edit</source>
+        <target>Edit Category</target>
+      </trans-unit>
+      <trans-unit id="title.category_list">
+        <source>title.category_list</source>
+        <target>Category List</target>
+      </trans-unit>
+      <trans-unit id="category.detail">
+        <source>category.detail</source>
+        <target>Category Detail</target>
+      </trans-unit>
+      <trans-unit id="category.add">
+        <source>category.add</source>
+        <target>Add Category</target>
+      </trans-unit>
+      <trans-unit id="form.remember_me">
+        <source>form.remember_me</source>
+        <target>Remember me</target>
+      </trans-unit>
+      <trans-unit id="users.list">
+        <source>users.list</source>
+        <target>Users List</target>
+      </trans-unit>
+      <trans-unit id="message.delete_blocked_comments">
+          <source>message.delete_blocked_comments</source>
+          <target>Post has comments</target>
+      </trans-unit>
+      <trans-unit id="title.user_edit">
+          <source>title.user_edit</source>
+          <target>Edit user</target>
+      </trans-unit>
+      <trans-unit id="label.nick">
+          <source>label.nick</source>
+          <target>Nickname</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+          <source>label.email</source>
+          <target>Email address</target>
+      </trans-unit>
+      <trans-unit id="label.post_date">
+          <source>label.post_date</source>
+          <target>Publication date</target>
+      </trans-unit>
+      <trans-unit id="label.category_title">
+          <source>label.category_title</source>
+          <target>Category title</target>
+      </trans-unit>
+      <trans-unit id="title.comment_create">
+        <source>title.comment_create</source>
+        <target>Create Comment</target>
+      </trans-unit>
+      <trans-unit id="title.comment_delete">
+        <source>title.comment_delete</source>
+        <target>Delete Comment #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.post_create">
+          <source>title.post_create</source>
+          <target>Create Post</target>
+      </trans-unit>
+      <trans-unit id="title.user_detail">
+          <source>title.user_detail</source>
+          <target>User details #%id%</target>
+      </trans-unit>
+      <trans-unit id="post.title">
+          <source>post.title</source>
+          <target>Title</target>
+      </trans-unit>
+       <trans-unit id="category.title">
+           <source>category.title</source>
+           <target>Category</target>
+       </trans-unit>
+       <trans-unit id="menu.app">
+           <source>menu.app</source>
+           <target>App</target>
+       </trans-unit>
+       <trans-unit id="menu.posts">
+           <source>menu.posts</source>
+           <target>Posts</target>
+       </trans-unit>
+       <trans-unit id="menu.categories">
+           <source>menu.categories</source>
+           <target>Categories</target>
+       </trans-unit>
+       <trans-unit id="menu.admin">
+           <source>menu.admin</source>
+           <target>Admin</target>
+       </trans-unit>
+       <trans-unit id="menu.profile">
+           <source>menu.profile</source>
+           <target>Profile</target>
+       </trans-unit>
+       <trans-unit id="menu.change_password">
+           <source>menu.change_password</source>
+           <target>Change password</target>
+       </trans-unit>
+       <trans-unit id="menu.logout">
+           <source>menu.logout</source>
+           <target>Logout</target>
+       </trans-unit>
+       <trans-unit id="title.profile">
+           <source>title.profile</source>
+           <target>Profile</target>
+       </trans-unit>
+       <trans-unit id="title.profile_edit">
+           <source>title.profile_edit</source>
+           <target>Edit profile</target>
+       </trans-unit>
+       <trans-unit id="title.change_password">
+           <source>title.change_password</source>
+           <target>Change password</target>
+       </trans-unit>
+       <trans-unit id="label.old_password">
+           <source>label.old_password</source>
+           <target>Old password</target>
+       </trans-unit>
+       <trans-unit id="label.new_password">
+           <source>label.new_password</source>
+           <target>New password</target>
+       </trans-unit>
+       <trans-unit id="label.none">
+           <source>label.none</source>
+           <target>None</target>
+       </trans-unit>
+       <trans-unit id="message.delete_confirm">
+           <source>message.delete_confirm</source>
+           <target>Are you sure?</target>
+       </trans-unit>
+       <trans-unit id="label.slug">
+           <source>label.slug</source>
+           <target>Slug</target>
+       </trans-unit>
+       <trans-unit id="title.category_posts">
+           <source>title.category_posts</source>
+           <target>Posts in this category</target>
+       </trans-unit>
+       <trans-unit id="title.category_edit">
+           <source>title.category_edit</source>
+           <target>Edit category #%id%</target>
+       </trans-unit>
+       <trans-unit id="title.please_sign_in">
+            <source>title.please_sign_in</source>
+            <target>Log in</target>
+       </trans-unit>
+       <trans-unit id="title.login">
+             <source>title.login</source>
+             <target>Logowanie</target>
+       </trans-unit>
     </body>
   </file>
 </xliff>

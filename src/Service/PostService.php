@@ -18,14 +18,22 @@ class PostService implements PostServiceInterface
 {
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-    public function __construct(
-        private readonly PostRepository $postRepository,
-        private readonly PaginatorInterface $paginator
-    ) {
+    /**
+     * Constructor.
+     *
+     * @param PostRepository     $postRepository Post repository
+     * @param PaginatorInterface $paginator      Paginator
+     */
+    public function __construct(private readonly PostRepository $postRepository, private readonly PaginatorInterface $paginator)
+    {
     }
 
     /**
      * Get paginated list.
+     *
+     * @param int $page Page number
+     *
+     * @return PaginationInterface Paginated list
      */
     public function getPaginatedList(int $page): PaginationInterface
     {
@@ -39,6 +47,7 @@ class PostService implements PostServiceInterface
                     'post.createdAt',
                     'post.updatedAt',
                     'post.title',
+                    'category.title',
                 ],
                 'defaultSortFieldName' => 'post.updatedAt',
                 'defaultSortDirection' => 'desc',
@@ -48,6 +57,8 @@ class PostService implements PostServiceInterface
 
     /**
      * Save entity.
+     *
+     * @param Post $post Post entity
      */
     public function save(Post $post): void
     {
@@ -56,6 +67,8 @@ class PostService implements PostServiceInterface
 
     /**
      * Delete entity.
+     *
+     * @param Post $post Post entity
      */
     public function delete(Post $post): void
     {

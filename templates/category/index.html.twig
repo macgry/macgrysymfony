@@ -16,9 +16,9 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'ID', 'category.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Title', 'category.title') }}</th>
-                <th>Actions</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'category.title') }}</th>
+                <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
 
@@ -28,11 +28,17 @@
                     <td>{{ category.id }}</td>
                     <td>{{ category.title }}</td>
                     <td>
-                        <a href="{{ url('category_view', {id: category.id}) }}">view</a>
+                        <a href="{{ url('category_view', {id: category.id}) }}">
+                            {{ 'action.view'|trans }}
+                        </a>
                         |
-                        <a href="{{ url('category_edit', {id: category.id}) }}">edit</a>
+                        <a href="{{ url('category_edit', {id: category.id}) }}">
+                            {{ 'action.edit'|trans }}
+                        </a>
                         |
-                        <a href="{{ url('category_delete', {id: category.id}) }}">delete</a>
+                        <a href="{{ url('category_delete', {id: category.id}) }}">
+                            {{ 'action.delete'|trans }}
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Category controller.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Category;
@@ -13,14 +17,29 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class CategoryController.
+ */
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    public function __construct(
-        private readonly CategoryServiceInterface $categoryService,
-        private readonly TranslatorInterface $translator
-    ) {}
+    /**
+     * Constructor.
+     *
+     * @param CategoryServiceInterface $categoryService Category service
+     * @param TranslatorInterface      $translator      Translator
+     */
+    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
+    {
+    }
 
+    /**
+     * Index action.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
+     */
     #[Route(name: 'category_index', methods: ['GET'])]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
@@ -31,6 +50,13 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    /**
+     * View action.
+     *
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
+     */
     #[Route('/{id}', name: 'category_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
     public function view(Category $category): Response
     {
@@ -39,6 +65,13 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
     #[Route('/create', name: 'category_create', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
@@ -66,6 +99,14 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
+     */
     #[Route('/{id}/edit', name: 'category_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category): Response
     {
@@ -95,6 +136,14 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    /**
+     * Delete action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
+     */
     #[Route('/{id}/delete', name: 'category_delete', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
     public function delete(Request $request, Category $category): Response
     {

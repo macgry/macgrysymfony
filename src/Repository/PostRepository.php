@@ -19,6 +19,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PostRepository extends ServiceEntityRepository
 {
+    /**
+     * PostRepository constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Post::class);
@@ -59,6 +64,8 @@ class PostRepository extends ServiceEntityRepository
 
     /**
      * Save entity.
+     *
+     * @param Post $post Post entity
      */
     public function save(Post $post): void
     {
@@ -68,6 +75,8 @@ class PostRepository extends ServiceEntityRepository
 
     /**
      * Delete entity.
+     *
+     * @param Post $post Post entity
      */
     public function delete(Post $post): void
     {

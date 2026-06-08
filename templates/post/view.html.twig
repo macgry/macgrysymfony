@@ -5,34 +5,79 @@
 {% endblock %}
 
 {% block body %}
+
     <h1>{{ post.title }}</h1>
 
     <dl class="dl-horizontal">
-        <dt>ID</dt>
+        <dt>{{ 'label.id'|trans }}</dt>
         <dd>{{ post.id }}</dd>
 
-        <dt>Created at</dt>
+        <dt>{{ 'label.created_at'|trans }}</dt>
         <dd>{{ post.createdAt|date('Y-m-d H:i') }}</dd>
 
-        <dt>Updated at</dt>
+        <dt>{{ 'label.updated_at'|trans }}</dt>
         <dd>{{ post.updatedAt|date('Y-m-d H:i') }}</dd>
 
-        <dt>Category</dt>
+        <dt>{{ 'label.category'|trans }}</dt>
         <dd>{{ post.category.title }}</dd>
 
-        <dt>Title</dt>
+        <dt>{{ 'label.title'|trans }}</dt>
         <dd>{{ post.title }}</dd>
     </dl>
 
     <a href="{{ url('post_index') }}" class="btn btn-secondary">
         {{ 'action.back_to_list'|trans }}
     </a>
-
     <a href="{{ url('post_edit', {id: post.id}) }}" class="btn btn-warning">
         {{ 'action.edit'|trans }}
     </a>
-
     <a href="{{ url('post_delete', {id: post.id}) }}" class="btn btn-danger">
         {{ 'action.delete'|trans }}
     </a>
+
+    <hr>
+
+    <h3>Dodaj komentarz</h3>
+
+    <form method="post" action="{{ path('comment_add', {id: post.id}) }}">
+        <input name="comment[nickname]" class="form-control mb-2" placeholder="Nick">
+        <input name="comment[email]" type="email" class="form-control mb-2" placeholder="Email">
+        <textarea name="comment[content]" class="form-control mb-2" placeholder="Komentarz"></textarea>
+
+        <input type="hidden" name="comment[_token]" value="{{ csrf_token('comment') }}">
+
+        <button class="btn btn-primary">Dodaj</button>
+    </form>
+
+    <hr>
+
+    <h3>Komentarze</h3>
+
+    {% for comment in post.comments %}
+        <div class="border p-2 mb-2">
+            <b>{{ comment.nickname }}</b>
+            <small class="text-muted">
+                {{ comment.createdAt|date('Y-m-d H:i') }}
+            </small>
+
+            <p>{{ comment.content }}</p>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <form method="post" action="{{ path('comment_delete', {id: comment.id}) }}">
+                    <input
+                        type="hidden"
+                        name="_token"
+                        value="{{ csrf_token('delete' ~ comment.id) }}"
+                    >
+
+                    <button class="btn btn-sm btn-danger">
+                        Usuń
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>Brak komentarzy</p>
+    {% endfor %}
+
 {% endblock %}

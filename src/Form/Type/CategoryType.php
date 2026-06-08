@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Category type.
+ */
+
 namespace App\Form\Type;
 
 use App\Entity\Category;
@@ -8,19 +12,33 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CategoryType.
+ */
 class CategoryType extends AbstractType
 {
+    /**
+     * Build form.
+     *
+     * @param FormBuilderInterface $builder Form builder
+     * @param array                $options Options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', TextType::class, [
             'label' => 'label.title',
             'required' => true,
             'attr' => [
-                'maxlength' => 64
+                'maxlength' => 64,
             ],
         ]);
     }
 
+    /**
+     * Configure options.
+     *
+     * @param OptionsResolver $resolver Options resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -28,6 +46,11 @@ class CategoryType extends AbstractType
         ]);
     }
 
+    /**
+     * Get block prefix.
+     *
+     * @return string Block prefix
+     */
     public function getBlockPrefix(): string
     {
         return 'category';

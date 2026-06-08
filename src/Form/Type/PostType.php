@@ -19,6 +19,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PostType extends AbstractType
 {
+    /**
+     * Build form.
+     *
+     * @param FormBuilderInterface $builder Form builder
+     * @param array                $options Options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -44,6 +50,11 @@ class PostType extends AbstractType
         );
     }
 
+    /**
+     * Configure options.
+     *
+     * @param OptionsResolver $resolver Options resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -51,6 +62,11 @@ class PostType extends AbstractType
         ]);
     }
 
+    /**
+     * Get block prefix.
+     *
+     * @return string Block prefix
+     */
     public function getBlockPrefix(): string
     {
         return 'post';

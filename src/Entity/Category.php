@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Category entity.
+ */
+
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
@@ -9,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Post;
 
 /**
  * Class Category.
@@ -55,67 +58,133 @@ class Category
     )]
     private Collection $posts;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
     }
 
+    /**
+     * Get identifier.
+     *
+     * @return int|null Identifier
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Get title.
+     *
+     * @return string|null Title
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * Set title.
+     *
+     * @param string|null $title Title
+     */
     public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
 
+    /**
+     * Get created at.
+     *
+     * @return \DateTimeImmutable|null Created at
+     */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    /**
+     * Set created at.
+     *
+     * @param \DateTimeImmutable $createdAt Created at
+     *
+     * @return static Category entity
+     */
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
+    /**
+     * Get updated at.
+     *
+     * @return \DateTimeImmutable|null Updated at
+     */
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
+    /**
+     * Set updated at.
+     *
+     * @param \DateTimeImmutable $updatedAt Updated at
+     *
+     * @return static Category entity
+     */
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
+    /**
+     * Get slug.
+     *
+     * @return string|null Slug
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * Set slug.
+     *
+     * @param string $slug Slug
+     *
+     * @return static Category entity
+     */
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
         return $this;
     }
 
     /**
-     * @return Collection<int, Post>
+     * Get posts.
+     *
+     * @return Collection<int, Post> Posts collection
      */
     public function getPosts(): Collection
     {
         return $this->posts;
     }
 
+    /**
+     * Add post.
+     *
+     * @param Post $post Post entity
+     *
+     * @return static Category entity
+     */
     public function addPost(Post $post): static
     {
         if (!$this->posts->contains($post)) {
@@ -126,6 +195,13 @@ class Category
         return $this;
     }
 
+    /**
+     * Remove post.
+     *
+     * @param Post $post Post entity
+     *
+     * @return static Category entity
+     */
     public function removePost(Post $post): static
     {
         if ($this->posts->removeElement($post)) {

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    <title>{% block title %}Welcome{% endblock %}</title>
 
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
@@ -15,20 +16,66 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="/">App</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
 
-        <div class="navbar-nav">
-            <a class="nav-link" href="{{ path('post_index') }}">Posts</a>
-            <a class="nav-link" href="{{ path('category_index') }}">Categories</a>
+        <a class="navbar-brand" href="{{ path('post_index') }}">{{ 'menu.app'|trans }}</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <div class="navbar-nav">
+                <a class="nav-link" href="{{ path('post_index') }}">{{ 'menu.posts'|trans }}</a>
+                <a class="nav-link" href="{{ path('category_index') }}">{{ 'menu.categories'|trans }}</a>
+            </div>
+
+            {# ADMIN MENU #}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="navbar-nav ms-auto">
+
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            {{ 'menu.admin'|trans }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <li>
+                                <a class="dropdown-item" href="{{ path('admin_profile_edit') }}">
+                                    <i class="bi bi-person"></i> {{ 'menu.profile'|trans }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="{{ path('admin_profile_password') }}">
+                                    <i class="bi bi-key"></i> {{ 'menu.change_password'|trans }}
+                                </a>
+                            </li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">
+                                    {{ 'menu.logout'|trans }}
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            {% endif %}
+
         </div>
     </div>
 </nav>
 
-<main class="container">
+<main class="container mt-4">
 
-    {# ✅ FLASH MESSAGES (POPRAWIONE) #}
+    {# FLASH MESSAGES #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
