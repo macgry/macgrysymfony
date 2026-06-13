@@ -11,6 +11,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use App\Service\CategoryService;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\NoResultException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PHPUnit\Framework\TestCase;
@@ -147,6 +148,33 @@ class CategoryServiceTest extends TestCase
             ->method('countByCategory')
             ->with($category)
             ->willReturn(3);
+
+        $paginator = $this->createMock(PaginatorInterface::class);
+
+        $service = new CategoryService($categoryRepository, $postRepository, $paginator);
+
+        // when
+        $result = $service->canBeDeleted($category);
+
+        // then
+        $this->assertFalse($result);
+    }
+
+    /**
+     * Test can be deleted returns false on exception.
+     */
+    public function testCanBeDeletedReturnsFalseOnException(): void
+    {
+        // given
+        $category = new Category();
+
+        $categoryRepository = $this->createMock(CategoryRepository::class);
+
+        $postRepository = $this->createMock(PostRepository::class);
+        $postRepository->expects($this->once())
+            ->method('countByCategory')
+            ->with($category)
+            ->willThrowException(new NoResultException());
 
         $paginator = $this->createMock(PaginatorInterface::class);
 

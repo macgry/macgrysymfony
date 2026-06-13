@@ -83,7 +83,7 @@ class CategoryControllerTest extends WebTestCase
         $adminUser = $this->createUser([UserRole::ROLE_ADMIN->value], 'admin-category-view@example.com');
         $this->httpClient->loginUser($adminUser);
 
-        $category = $this->createCategory();
+        $category = $this->createCategory('Test category view');
 
         // when
         $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$category->getId());
@@ -112,14 +112,74 @@ class CategoryControllerTest extends WebTestCase
     }
 
     /**
+     * Test create route for admin user.
+     */
+    public function testCreateRouteAdminUser(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+        $adminUser = $this->createUser([UserRole::ROLE_ADMIN->value], 'admin-category-create@example.com');
+        $this->httpClient->loginUser($adminUser);
+
+        // when
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/create');
+        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test edit route for admin user.
+     */
+    public function testEditRouteAdminUser(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+        $adminUser = $this->createUser([UserRole::ROLE_ADMIN->value], 'admin-category-edit@example.com');
+        $this->httpClient->loginUser($adminUser);
+
+        $category = $this->createCategory('Test category edit');
+
+        // when
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$category->getId().'/edit');
+        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test delete route for admin user.
+     */
+    public function testDeleteRouteAdminUser(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+        $adminUser = $this->createUser([UserRole::ROLE_ADMIN->value], 'admin-category-delete@example.com');
+        $this->httpClient->loginUser($adminUser);
+
+        $category = $this->createCategory('Test category delete');
+
+        // when
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$category->getId().'/delete');
+        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
      * Create category.
+     *
+     * @param string $title Category title
      *
      * @return Category Category entity
      */
-    private function createCategory(): Category
+    private function createCategory(string $title = 'Test category'): Category
     {
         $category = new Category();
-        $category->setTitle('Test category');
+        $category->setTitle($title);
 
         $categoryRepository = static::getContainer()->get(CategoryRepository::class);
         $categoryRepository->save($category);

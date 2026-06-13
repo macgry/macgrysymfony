@@ -114,20 +114,83 @@ class PostControllerTest extends WebTestCase
     }
 
     /**
+     * Test create route for admin user.
+     */
+    public function testCreateRouteAdminUser(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+        $adminUser = $this->createUser([UserRole::ROLE_ADMIN->value], 'admin-post-create@example.com');
+        $this->httpClient->loginUser($adminUser);
+
+        // when
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/create');
+        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test edit route for admin user.
+     */
+    public function testEditRouteAdminUser(): void
+    {
+        // given
+        $expectedStatusCode = 200;
+        $adminUser = $this->createUser([UserRole::ROLE_ADMIN->value], 'admin-post-edit@example.com');
+        $this->httpClient->loginUser($adminUser);
+
+        $post = $this->createPost('Test post edit', 'Test category edit');
+
+        // when
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$post->getId().'/edit');
+        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+    }
+
+    /**
+     * Test delete route for admin user.
+     */
+    public function testDeleteRouteAdminUser(): void
+    {
+        // given
+        $expectedStatusCode = 302;
+        $adminUser = $this->createUser([UserRole::ROLE_ADMIN->value], 'admin-post-delete@example.com');
+        $this->httpClient->loginUser($adminUser);
+
+        $post = $this->createPost('Test post delete', 'Test category delete');
+        $postId = $post->getId();
+
+        // when
+        $this->httpClient->request('POST', self::TEST_ROUTE.'/'.$postId.'/delete');
+        $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
+
+        // then
+        $this->assertEquals($expectedStatusCode, $resultStatusCode);
+        $this->assertNull(static::getContainer()->get(PostRepository::class)->find($postId));
+    }
+
+    /**
      * Create post.
+     *
+     * @param string $title         Post title
+     * @param string $categoryTitle Category title
      *
      * @return Post Post entity
      */
-    private function createPost(): Post
+    private function createPost(string $title = 'Test post', string $categoryTitle = 'Test category'): Post
     {
         $category = new Category();
-        $category->setTitle('Test category');
+        $category->setTitle($categoryTitle);
 
         $categoryRepository = static::getContainer()->get(CategoryRepository::class);
         $categoryRepository->save($category);
 
         $post = new Post();
-        $post->setTitle('Test post');
+        $post->setTitle($title);
         $post->setCategory($category);
 
         $postRepository = static::getContainer()->get(PostRepository::class);

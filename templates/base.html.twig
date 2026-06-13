@@ -19,7 +19,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
 
-        <a class="navbar-brand" href="{{ path('post_index') }}">{{ 'menu.app'|trans }}</a>
+        <a class="navbar-brand" href="{{ path('post_index') }}">
+            {{ 'menu.app'|trans }}
+        </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -28,46 +30,63 @@
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <div class="navbar-nav">
-                <a class="nav-link" href="{{ path('post_index') }}">{{ 'menu.posts'|trans }}</a>
-                <a class="nav-link" href="{{ path('category_index') }}">{{ 'menu.categories'|trans }}</a>
+                <a class="nav-link" href="{{ path('post_index') }}">
+                    {{ 'menu.posts'|trans }}
+                </a>
+
+                <a class="nav-link" href="{{ path('category_index') }}">
+                    {{ 'menu.categories'|trans }}
+                </a>
             </div>
 
-            {# ADMIN MENU #}
-            {% if is_granted('ROLE_ADMIN') %}
-                <div class="navbar-nav ms-auto">
+            <div class="navbar-nav ms-auto">
 
+                {% if is_granted('ROLE_ADMIN') %}
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown">
                             {{ 'menu.admin'|trans }}
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end">
 
                             <li>
-                                <a class="dropdown-item" href="{{ path('admin_profile_edit') }}">
-                                    <i class="bi bi-person"></i> {{ 'menu.profile'|trans }}
+                                <a class="dropdown-item"
+                                   href="{{ path('admin_profile_edit') }}">
+                                    <i class="bi bi-person"></i>
+                                    {{ 'menu.profile'|trans }}
                                 </a>
                             </li>
 
                             <li>
-                                <a class="dropdown-item" href="{{ path('admin_profile_password') }}">
-                                    <i class="bi bi-key"></i> {{ 'menu.change_password'|trans }}
-                                </a>
-                            </li>
-
-                            <li><hr class="dropdown-divider"></li>
-
-                            <li>
-                                <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">
-                                    {{ 'menu.logout'|trans }}
+                                <a class="dropdown-item"
+                                   href="{{ path('admin_profile_password') }}">
+                                    <i class="bi bi-key"></i>
+                                    {{ 'menu.change_password'|trans }}
                                 </a>
                             </li>
 
                         </ul>
                     </div>
+                {% endif %}
 
-                </div>
-            {% endif %}
+                {% if app.user %}
+                    <a class="nav-link text-danger"
+                       href="{{ path('app_logout') }}">
+                        <i class="bi bi-box-arrow-right"></i>
+                        {{ 'menu.logout'|trans }}
+                    </a>
+                {% else %}
+                    <a class="nav-link"
+                       href="{{ path('app_login') }}">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Zaloguj się
+                    </a>
+                {% endif %}
+
+            </div>
 
         </div>
     </div>
@@ -75,12 +94,13 @@
 
 <main class="container mt-4">
 
-    {# FLASH MESSAGES #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
                 {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"></button>
             </div>
         {% endfor %}
     {% endfor %}

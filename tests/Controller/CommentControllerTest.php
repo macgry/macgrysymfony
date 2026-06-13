@@ -10,6 +10,9 @@ use App\Entity\Category;
 use App\Entity\Post;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
+use App\Entity\Enum\UserRole;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -40,6 +43,8 @@ class CommentControllerTest extends WebTestCase
         $post = $this->createPost();
 
         // when
+        $user = $this->createUser('comment-user@example.com');
+        $this->httpClient->loginUser($user);
         $this->httpClient->request('POST', '/comment/post/'.$post->getId().'/add');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
@@ -78,5 +83,33 @@ class CommentControllerTest extends WebTestCase
         $postRepository->save($post);
 
         return $post;
+    }
+
+    /**
+     * Create user.
+     *
+     * @param string $email User email
+     *
+     * @return User User entity
+     */
+    private function createUser(string $email): User
+    {
+        $passwordHasher = static::getContainer()->get('security.password_hasher');
+
+        $user = new User();
+        $user->setEmail($email);
+        $user->setRoles([UserRole::ROLE_USER->value]);
+        $user->setPassword(
+            $passwordHasher->hashPassword(
+                $user,
+                'password'
+            )
+        );
+
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $user;
     }
 }
