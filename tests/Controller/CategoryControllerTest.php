@@ -86,7 +86,7 @@ class CategoryControllerTest extends WebTestCase
         $category = $this->createCategory('Test category view');
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$category->getId());
+        $this->httpClient->request('GET', self::TEST_ROUTE . '/' . $category->getId());
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -104,7 +104,7 @@ class CategoryControllerTest extends WebTestCase
         $this->httpClient->loginUser($adminUser);
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/999999');
+        $this->httpClient->request('GET', self::TEST_ROUTE . '/999999');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -122,7 +122,7 @@ class CategoryControllerTest extends WebTestCase
         $this->httpClient->loginUser($adminUser);
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/create');
+        $this->httpClient->request('GET', self::TEST_ROUTE . '/create');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -142,7 +142,7 @@ class CategoryControllerTest extends WebTestCase
         $category = $this->createCategory('Test category edit');
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$category->getId().'/edit');
+        $this->httpClient->request('GET', self::TEST_ROUTE . '/' . $category->getId() . '/edit');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -162,7 +162,7 @@ class CategoryControllerTest extends WebTestCase
         $category = $this->createCategory('Test category delete');
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$category->getId().'/delete');
+        $this->httpClient->request('GET', self::TEST_ROUTE . '/' . $category->getId() . '/delete');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then

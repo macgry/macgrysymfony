@@ -69,8 +69,8 @@ class RecordController extends AbstractController
     #[Route('/bookmarks', name: 'record_bookmarks', methods: ['GET'])]
     public function bookmarks(): Response
     {
-        require_once __DIR__.'/../../inc/debug.inc.php';
-        require_once __DIR__.'/../../inc/bookmarks.inc.php';
+        require_once __DIR__ . '/../../inc/debug.inc.php';
+        require_once __DIR__ . '/../../inc/bookmarks.inc.php';
 
         $allBookmarks = find_all();
 

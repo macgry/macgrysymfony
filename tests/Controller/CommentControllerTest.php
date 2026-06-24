@@ -7,11 +7,11 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Category;
+use App\Entity\Enum\UserRole;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
-use App\Entity\Enum\UserRole;
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -45,7 +45,7 @@ class CommentControllerTest extends WebTestCase
         // when
         $user = $this->createUser('comment-user@example.com');
         $this->httpClient->loginUser($user);
-        $this->httpClient->request('POST', '/comment/post/'.$post->getId().'/add');
+        $this->httpClient->request('POST', '/comment/post/' . $post->getId() . '/add');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then

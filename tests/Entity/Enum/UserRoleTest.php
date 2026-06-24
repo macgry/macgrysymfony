@@ -54,4 +54,3 @@ class UserRoleTest extends TestCase
         $this->assertSame('ROLE_ADMIN', UserRole::ROLE_ADMIN->value);
     }
 }
-

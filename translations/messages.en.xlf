@@ -334,6 +334,14 @@
              <source>title.login</source>
              <target>Logowanie</target>
        </trans-unit>
+       <trans-unit id="message.empty_list">
+             <source>message.empty_list</source>
+             <target>List is empty</target>
+       </trans-unit>
+       <trans-unit id="message.logged_in_as">
+             <source>message.logged_in_as</source>
+             <target>Logged in as</target>
+       </trans-unit>
     </body>
   </file>
 </xliff>

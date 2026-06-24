@@ -68,7 +68,7 @@ class RecordControllerTest extends WebTestCase
         $user = $this->createUser('record-view@example.com');
         $this->httpClient->loginUser($user);
 
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/1');
+        $this->httpClient->request('GET', self::TEST_ROUTE . '/1');
 
         $this->assertEquals(200, $this->httpClient->getResponse()->getStatusCode());
     }
@@ -81,7 +81,7 @@ class RecordControllerTest extends WebTestCase
         $user = $this->createUser('record-not-found@example.com');
         $this->httpClient->loginUser($user);
 
-        $this->httpClient->request('GET', self::TEST_ROUTE.'/999999');
+        $this->httpClient->request('GET', self::TEST_ROUTE . '/999999');
 
         $this->assertEquals(404, $this->httpClient->getResponse()->getStatusCode());
     }
