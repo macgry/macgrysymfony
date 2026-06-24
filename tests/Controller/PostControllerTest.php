@@ -88,7 +88,7 @@ class PostControllerTest extends WebTestCase
         $post = $this->createPost();
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE . '/' . $post->getId());
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$post->getId());
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -106,7 +106,7 @@ class PostControllerTest extends WebTestCase
         $this->httpClient->loginUser($adminUser);
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE . '/999999');
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/999999');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -124,7 +124,7 @@ class PostControllerTest extends WebTestCase
         $this->httpClient->loginUser($adminUser);
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE . '/create');
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/create');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -144,7 +144,7 @@ class PostControllerTest extends WebTestCase
         $post = $this->createPost('Test post edit', 'Test category edit');
 
         // when
-        $this->httpClient->request('GET', self::TEST_ROUTE . '/' . $post->getId() . '/edit');
+        $this->httpClient->request('GET', self::TEST_ROUTE.'/'.$post->getId().'/edit');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then
@@ -165,7 +165,7 @@ class PostControllerTest extends WebTestCase
         $postId = $post->getId();
 
         // when
-        $this->httpClient->request('POST', self::TEST_ROUTE . '/' . $postId . '/delete');
+        $this->httpClient->request('POST', self::TEST_ROUTE.'/'.$postId.'/delete');
         $resultStatusCode = $this->httpClient->getResponse()->getStatusCode();
 
         // then

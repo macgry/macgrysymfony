@@ -83,4 +83,19 @@ class PostRepository extends ServiceEntityRepository
         $this->getEntityManager()->remove($post);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * Query by category.
+     *
+     * @param Category $category Category entity
+     *
+     * @return QueryBuilder Query builder
+     */
+    public function queryByCategory(Category $category): QueryBuilder
+    {
+        return $this->createQueryBuilder('post')
+            ->where('post.category = :category')
+            ->setParameter('category', $category)
+            ->orderBy('post.updatedAt', 'DESC');
+    }
 }

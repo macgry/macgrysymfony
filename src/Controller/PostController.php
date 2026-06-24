@@ -8,14 +8,15 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\Type\PostType;
+use App\Repository\CommentRepository;
 use App\Service\PostServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class PostController.
@@ -56,10 +57,16 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id<\d+>}', name: 'post_view', methods: ['GET'])]
-    public function view(Post $post): Response
+    public function view(Post $post, CommentRepository $commentRepository): Response
     {
+        $comments = $commentRepository
+            ->queryByPost($post->getId())
+            ->getQuery()
+            ->getResult();
+
         return $this->render('post/view.html.twig', [
             'post' => $post,
+            'comments' => $comments,
         ]);
     }
 
@@ -134,9 +141,9 @@ class PostController extends AbstractController
      */
     #[Route('/{id}/delete', name: 'post_delete', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function delete(Request $request, Post $post): Response
+    public function delete(Request $request, Post $post, CommentRepository $commentRepository): Response
     {
-        if (0 < $post->getComments()->count()) {
+        if (0 < $commentRepository->countByPost($post)) {
             $this->addFlash('warning', $this->translator->trans('message.post_contains_comments'));
 
             return $this->redirectToRoute('post_view', [

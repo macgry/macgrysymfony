@@ -67,7 +67,7 @@ class CommentController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Comment $comment, Request $request, EntityManagerInterface $em): Response
     {
-        if (!$this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $this->addFlash('error', 'Invalid CSRF token.');
 
             return $this->redirectToRoute('post_view', [

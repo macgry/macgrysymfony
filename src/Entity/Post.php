@@ -7,8 +7,6 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,25 +36,9 @@ class Post
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts', fetch: 'EXTRA_LAZY')]
+    #[ORM\ManyToOne(targetEntity: Category::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
-
-    /**
-     * Comments.
-     *
-     * @var Collection<int, Comment>
-     */
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, cascade: ['remove'])]
-    private Collection $comments;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
 
     /**
      * Get identifier.
@@ -150,15 +132,5 @@ class Post
         $this->category = $category;
 
         return $this;
-    }
-
-    /**
-     * Get comments.
-     *
-     * @return Collection<int, Comment> Comments collection
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
     }
 }

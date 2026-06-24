@@ -7,6 +7,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -64,5 +65,23 @@ class CommentRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->remove($comment);
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Count comments by post.
+     *
+     * @param Post $post Post entity
+     *
+     * @return int Number of comments
+     */
+    public function countByPost(Post $post): int
+    {
+        $qb = $this->createQueryBuilder('comment');
+
+        return (int) $qb->select($qb->expr()->countDistinct('comment.id'))
+            ->where('comment.post = :post')
+            ->setParameter('post', $post)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

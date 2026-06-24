@@ -36,7 +36,7 @@ class Comment
     #[Assert\NotBlank(message: 'message.comment_content_required')]
     private ?string $content = null;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]
+    #[ORM\ManyToOne(targetEntity: Post::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Post $post = null;
 

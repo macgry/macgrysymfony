@@ -8,6 +8,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\Type\CategoryType;
+use App\Repository\PostRepository;
 use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -58,10 +59,16 @@ class CategoryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'category_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
-    public function view(Category $category): Response
+    public function view(Category $category, PostRepository $postRepository): Response
     {
+        $posts = $postRepository
+            ->queryByCategory($category)
+            ->getQuery()
+            ->getResult();
+
         return $this->render('category/view.html.twig', [
             'category' => $category,
+            'posts' => $posts,
         ]);
     }
 
