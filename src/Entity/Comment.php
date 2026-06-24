@@ -9,6 +9,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Comment.
@@ -23,12 +24,16 @@ class Comment
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'message.nickname_required')]
     private ?string $nickname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'message.email_required')]
+    #[Assert\Email(message: 'message.email_invalid')]
     private ?string $email = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: 'message.comment_content_required')]
     private ?string $content = null;
 
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]

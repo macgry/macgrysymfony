@@ -28,12 +28,21 @@
     <a href="{{ url('post_index') }}" class="btn btn-secondary">
         {{ 'action.back_to_list'|trans }}
     </a>
-    <a href="{{ url('post_edit', {id: post.id}) }}" class="btn btn-warning">
-        {{ 'action.edit'|trans }}
-    </a>
-    <a href="{{ url('post_delete', {id: post.id}) }}" class="btn btn-danger">
-        {{ 'action.delete'|trans }}
-    </a>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ url('post_edit', {id: post.id}) }}" class="btn btn-warning">
+            {{ 'action.edit'|trans }}
+        </a>
+
+        <form method="post"
+              action="{{ path('post_delete', {id: post.id}) }}"
+              style="display: inline-block"
+              onsubmit="return confirm('{{ 'message.delete_confirm'|trans }}');">
+            <button class="btn btn-danger">
+                {{ 'action.delete'|trans }}
+            </button>
+        </form>
+    {% endif %}
 
     <hr>
 

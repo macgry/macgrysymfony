@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class PostController.
@@ -99,6 +100,7 @@ class PostController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'post_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Post $post): Response
     {
         $form = $this->createForm(PostType::class, $post, [
@@ -125,13 +127,29 @@ class PostController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Post $post Post entity
+     * @param Request $request HTTP request
+     * @param Post    $post    Post entity
      *
      * @return Response HTTP response
      */
-    #[Route('/{id}/delete', name: 'post_delete', methods: ['POST'])]
-    public function delete(Post $post): Response
+    #[Route('/{id}/delete', name: 'post_delete', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function delete(Request $request, Post $post): Response
     {
+        if (0 < $post->getComments()->count()) {
+            $this->addFlash('warning', $this->translator->trans('message.post_contains_comments'));
+
+            return $this->redirectToRoute('post_view', [
+                'id' => $post->getId(),
+            ]);
+        }
+
+        if (!$request->isMethod('POST')) {
+            return $this->render('post/delete.html.twig', [
+                'post' => $post,
+            ]);
+        }
+
         $this->postService->delete($post);
 
         $this->addFlash('success', $this->translator->trans('message.deleted_successfully'));

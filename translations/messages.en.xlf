@@ -342,6 +342,30 @@
              <source>message.logged_in_as</source>
              <target>Logged in as</target>
        </trans-unit>
+       <trans-unit id="message.nickname_required">
+           <source>message.nickname_required</source>
+           <target>Nickname is required.</target>
+       </trans-unit>
+       <trans-unit id="message.email_required">
+           <source>message.email_required</source>
+           <target>Email is required.</target>
+       </trans-unit>
+       <trans-unit id="message.email_invalid">
+           <source>message.email_invalid</source>
+           <target>Invalid email address.</target>
+       </trans-unit>
+       <trans-unit id="message.comment_content_required">
+           <source>message.comment_content_required</source>
+           <target>Comment content is required.</target>
+       </trans-unit>
+       <trans-unit id="message.post_contains_comments">
+           <source>message.post_contains_comments</source>
+           <target>Post contains comments and cannot be deleted.</target>
+       </trans-unit>
+       <trans-unit id="message.post_title_required">
+           <source>message.post_title_required</source>
+           <target>Title is required.</target>
+       </trans-unit>
     </body>
   </file>
 </xliff>

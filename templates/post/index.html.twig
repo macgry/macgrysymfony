@@ -40,18 +40,22 @@
                             {{ 'action.view'|trans }}
                         </a>
 
-                        <a href="{{ url('post_edit', {id: post.id}) }}" class="btn btn-sm btn-warning">
-                            {{ 'action.edit'|trans }}
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
 
-                        <form method="post"
-                              action="{{ path('post_delete', {id: post.id}) }}"
-                              style="display: inline-block"
-                              onsubmit="return confirm('{{ 'message.delete_confirm'|trans }}');">
-                            <button class="btn btn-sm btn-danger">
-                                {{ 'action.delete'|trans }}
-                            </button>
-                        </form>
+                            <a href="{{ url('post_edit', {id: post.id}) }}" class="btn btn-sm btn-warning">
+                                {{ 'action.edit'|trans }}
+                            </a>
+
+                            <form method="post"
+                                  action="{{ path('post_delete', {id: post.id}) }}"
+                                  style="display: inline-block"
+                                  onsubmit="return confirm('{{ 'message.delete_confirm'|trans }}');">
+                                <button class="btn btn-sm btn-danger">
+                                    {{ 'action.delete'|trans }}
+                                </button>
+                            </form>
+
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

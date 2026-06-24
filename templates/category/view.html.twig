@@ -12,13 +12,19 @@
             <h1 class="mb-0">{{ category.title }}</h1>
 
             <div>
-                <a href="{{ url('category_index') }}" class="btn btn-secondary btn-sm">
-                    ← {{ 'action.back_to_list'|trans }}
+                <a href="{{ url('category_index') }}" class="btn btn-secondary">
+                    {{ 'action.back_to_list'|trans }}
                 </a>
 
-                <a href="{{ url('category_edit', {id: category.id}) }}" class="btn btn-primary btn-sm">
-                    {{ 'action.edit'|trans }}
-                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ url('category_edit', {id: category.id}) }}" class="btn btn-warning">
+                        {{ 'action.edit'|trans }}
+                    </a>
+
+                    <a href="{{ url('category_delete', {id: category.id}) }}" class="btn btn-danger">
+                        {{ 'action.delete'|trans }}
+                    </a>
+                {% endif %}
             </div>
         </div>
 
