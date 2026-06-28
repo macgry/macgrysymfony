@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="pl" datatype="plaintext" original="validators.pl.xlf">
+        <body>
+            <trans-unit id="message.post_title_required">
+                <source>message.post_title_required</source>
+                <target>Tytuł jest wymagany.</target>
+            </trans-unit>
+
+            <trans-unit id="message.nickname_required">
+                <source>message.nickname_required</source>
+                <target>Nazwa użytkownika jest wymagana.</target>
+            </trans-unit>
+
+            <trans-unit id="message.email_required">
+                <source>message.email_required</source>
+                <target>Adres e-mail jest wymagany.</target>
+            </trans-unit>
+
+            <trans-unit id="message.email_invalid">
+                <source>message.email_invalid</source>
+                <target>Podano nieprawidłowy adres e-mail.</target>
+            </trans-unit>
+
+            <trans-unit id="message.comment_content_required">
+                <source>message.comment_content_required</source>
+                <target>Treść komentarza jest wymagana.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

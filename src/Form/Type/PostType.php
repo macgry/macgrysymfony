@@ -42,7 +42,7 @@ class PostType extends AbstractType
             EntityType::class,
             [
                 'class' => Category::class,
-                'choice_label' => fn (Category $category): ?string => $category->getTitle(),
+                'choice_label' => fn(Category $category): ?string => $category->getTitle(),
                 'label' => 'label.category',
                 'placeholder' => 'label.none',
                 'required' => true,

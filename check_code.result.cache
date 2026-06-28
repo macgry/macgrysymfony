@@ -1,0 +1,91 @@
+   1) src/Form/Type/PostType.php (function_declaration)
+   2) src/Controller/CommentController.php (concat_space)
+   3) src/DataFixtures/AbstractBaseFixtures.php (function_declaration)
+   4) src/Service/CategoryService.php (types_spaces)
+
+Found 4 of 31 files that can be fixed in 8.180 seconds, 56.00 MB memory used
+   1) tests/bootstrap.php (concat_space)
+   2) tests/Controller/CategoryControllerTest.php (concat_space)
+   3) tests/Controller/CommentControllerTest.php (concat_space)
+   4) tests/Controller/PostControllerTest.php (concat_space)
+   5) tests/Controller/RecordControllerTest.php (concat_space)
+
+Found 5 of 23 files that can be fixed in 9.171 seconds, 56.00 MB memory used
+
+FILE: /home/wwwroot/app/src/Controller/CommentController.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 70 | ERROR | [x] Concat operator must not be surrounded by spaces
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/CategoryControllerTest.php
+----------------------------------------------------------------------
+FOUND 10 ERRORS AFFECTING 5 LINES
+----------------------------------------------------------------------
+  89 | ERROR | [x] Concat operator must not be surrounded by spaces
+  89 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 107 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 125 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 145 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 145 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 145 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 165 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 165 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 165 | ERROR | [x] Concat operator must not be surrounded by spaces
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 10 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/CommentControllerTest.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 48 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 48 | ERROR | [x] Concat operator must not be surrounded by spaces
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/PostControllerTest.php
+----------------------------------------------------------------------
+FOUND 10 ERRORS AFFECTING 5 LINES
+----------------------------------------------------------------------
+  91 | ERROR | [x] Concat operator must not be surrounded by spaces
+  91 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 109 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 127 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 147 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 147 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 147 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 168 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 168 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 168 | ERROR | [x] Concat operator must not be surrounded by spaces
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 10 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /home/wwwroot/app/tests/Controller/RecordControllerTest.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 71 | ERROR | [x] Concat operator must not be surrounded by spaces
+ 84 | ERROR | [x] Concat operator must not be surrounded by spaces
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 2 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+ ------- -------- ---- ---------------------- 
+  State   Domain   Id   Message Preview (en)  
+ ------- -------- ---- ---------------------- 
+
+ ------- -------- ---- ---------------------- ------------------------------- 
+  State   Domain   Id   Message Preview (pl)   Fallback Message Preview (en)  
+ ------- -------- ---- ---------------------- ------------------------------- 
+

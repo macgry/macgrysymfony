@@ -16,7 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Class CategoryController.
@@ -54,21 +56,35 @@ class CategoryController extends AbstractController
     /**
      * View action.
      *
-     * @param Category $category Category entity
+     * @param Category           $category       Category entity
+     * @param PostRepository     $postRepository Post repository
+     * @param PaginatorInterface $paginator      Paginator
+     * @param int                $page           Page number
      *
      * @return Response HTTP response
      */
     #[Route('/{id}', name: 'category_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
-    public function view(Category $category, PostRepository $postRepository): Response
+    public function view(Category $category, PostRepository $postRepository, PaginatorInterface $paginator, #[MapQueryParameter] int $page = 1): Response
     {
-        $posts = $postRepository
-            ->queryByCategory($category)
-            ->getQuery()
-            ->getResult();
+        $pagination = $paginator->paginate(
+            $postRepository->queryByCategory($category),
+            $page,
+            10,
+            [
+                'sortFieldAllowList' => [
+                    'post.id',
+                    'post.title',
+                    'post.createdAt',
+                    'post.updatedAt',
+                ],
+                'defaultSortFieldName' => 'post.updatedAt',
+                'defaultSortDirection' => 'desc',
+            ]
+        );
 
         return $this->render('category/view.html.twig', [
             'category' => $category,
-            'posts' => $posts,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -115,6 +131,7 @@ class CategoryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/edit', name: 'category_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Category $category): Response
     {
         $form = $this->createForm(CategoryType::class, $category, [
@@ -152,6 +169,7 @@ class CategoryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route('/{id}/delete', name: 'category_delete', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Category $category): Response
     {
         if (!$this->categoryService->canBeDeleted($category)) {

@@ -60,6 +60,21 @@ class SecurityControllerTest extends WebTestCase
     }
 
     /**
+     * Test logout throws logic exception.
+     */
+    public function testLogoutThrowsLogicException(): void
+    {
+        // given
+        $controller = new \App\Controller\SecurityController();
+
+        // then
+        $this->expectException(\LogicException::class);
+
+        // when
+        $controller->logout();
+    }
+
+    /**
      * Create user.
      *
      * @return User User entity
@@ -83,20 +98,5 @@ class SecurityControllerTest extends WebTestCase
         $entityManager->flush();
 
         return $user;
-    }
-
-    /**
-     * Test logout throws logic exception.
-     */
-    public function testLogoutThrowsLogicException(): void
-    {
-        // given
-        $controller = new \App\Controller\SecurityController();
-
-        // then
-        $this->expectException(\LogicException::class);
-
-        // when
-        $controller->logout();
     }
 }

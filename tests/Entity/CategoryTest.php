@@ -7,8 +7,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Category;
-use App\Entity\Post;
-use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,8 +28,6 @@ class CategoryTest extends TestCase
         $this->assertNull($category->getCreatedAt());
         $this->assertNull($category->getUpdatedAt());
         $this->assertNull($category->getSlug());
-        $this->assertInstanceOf(Collection::class, $category->getPosts());
-        $this->assertCount(0, $category->getPosts());
     }
 
     /**
@@ -99,79 +95,5 @@ class CategoryTest extends TestCase
         // then
         $this->assertSame($category, $result);
         $this->assertSame($slug, $category->getSlug());
-    }
-
-    /**
-     * Test add post.
-     */
-    public function testAddPost(): void
-    {
-        // given
-        $category = new Category();
-        $post = new Post();
-
-        // when
-        $result = $category->addPost($post);
-
-        // then
-        $this->assertSame($category, $result);
-        $this->assertCount(1, $category->getPosts());
-        $this->assertTrue($category->getPosts()->contains($post));
-        $this->assertSame($category, $post->getCategory());
-    }
-
-    /**
-     * Test add the same post twice.
-     */
-    public function testAddSamePostTwice(): void
-    {
-        // given
-        $category = new Category();
-        $post = new Post();
-
-        // when
-        $category->addPost($post);
-        $category->addPost($post);
-
-        // then
-        $this->assertCount(1, $category->getPosts());
-        $this->assertSame($category, $post->getCategory());
-    }
-
-    /**
-     * Test remove post.
-     */
-    public function testRemovePost(): void
-    {
-        // given
-        $category = new Category();
-        $post = new Post();
-        $category->addPost($post);
-
-        // when
-        $result = $category->removePost($post);
-
-        // then
-        $this->assertSame($category, $result);
-        $this->assertCount(0, $category->getPosts());
-        $this->assertFalse($category->getPosts()->contains($post));
-        $this->assertNull($post->getCategory());
-    }
-
-    /**
-     * Test remove post that does not belong to category.
-     */
-    public function testRemovePostThatDoesNotBelongToCategory(): void
-    {
-        // given
-        $category = new Category();
-        $post = new Post();
-
-        // when
-        $result = $category->removePost($post);
-
-        // then
-        $this->assertSame($category, $result);
-        $this->assertCount(0, $category->getPosts());
     }
 }

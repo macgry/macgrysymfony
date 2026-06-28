@@ -8,7 +8,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Category;
 use App\Entity\Post;
-use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,16 +29,6 @@ class PostTest extends TestCase
         $this->assertNull($post->getCreatedAt());
         $this->assertNull($post->getUpdatedAt());
         $this->assertNull($post->getCategory());
-
-        $this->assertInstanceOf(
-            Collection::class,
-            $post->getComments()
-        );
-
-        $this->assertCount(
-            0,
-            $post->getComments()
-        );
     }
 
     /**

@@ -17,20 +17,6 @@ use Symfony\Component\Validator\Validation;
 class ChangePasswordTypeTest extends TypeTestCase
 {
     /**
-     * Get form extensions.
-     *
-     * @return array Form extensions
-     */
-    protected function getExtensions(): array
-    {
-        $validator = Validation::createValidator();
-
-        return [
-            new ValidatorExtension($validator),
-        ];
-    }
-
-    /**
      * Test submit valid data.
      */
     public function testSubmitValidData(): void
@@ -62,5 +48,19 @@ class ChangePasswordTypeTest extends TypeTestCase
         // then
         $this->assertTrue($form->has('oldPassword'));
         $this->assertTrue($form->has('newPassword'));
+    }
+
+    /**
+     * Get form extensions.
+     *
+     * @return array Form extensions
+     */
+    protected function getExtensions(): array
+    {
+        $validator = Validation::createValidator();
+
+        return [
+            new ValidatorExtension($validator),
+        ];
     }
 }

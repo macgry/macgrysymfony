@@ -139,7 +139,7 @@ abstract class AbstractBaseFixtures extends Fixture
 
         $referenceNameList = array_filter(
             $referenceNameListByClass,
-            fn ($referenceName) => preg_match_all("/^{$referenceGroupName}_\\d+\$/", (string) $referenceName)
+            fn($referenceName) => preg_match_all("/^{$referenceGroupName}_\\d+\$/", (string) $referenceName)
         );
 
         if ([] === $referenceNameList) {

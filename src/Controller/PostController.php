@@ -52,7 +52,8 @@ class PostController extends AbstractController
     /**
      * View action.
      *
-     * @param Post $post Post entity
+     * @param Post              $post              Post entity
+     * @param CommentRepository $commentRepository Comment repository
      *
      * @return Response HTTP response
      */
@@ -134,8 +135,9 @@ class PostController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request HTTP request
-     * @param Post    $post    Post entity
+     * @param Request           $request           HTTP request
+     * @param Post              $post              Post entity
+     * @param CommentRepository $commentRepository Comment repository
      *
      * @return Response HTTP response
      */
